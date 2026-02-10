@@ -6,6 +6,7 @@ import { FacebookIcon } from "./icons/FacebookIcon.tsx";
 import { InstagramIcon } from "./icons/InstagramIcon.tsx";
 import { WhatsAppIcon } from "./icons/WhatsAppIcon.tsx";
 import { WhatsAppButton } from "./WhatsAppButton.tsx";
+import { OpalLogo } from "./branding/OpalLogo.tsx";
 
 type Props = {
   children: React.ReactNode;
@@ -18,7 +19,9 @@ export function Layout({ children }: Props) {
   return (
     <div className="min-h-screen bg-[#f7f5ef] text-[#2f3e2f] font-serif flex flex-col">
       <header className="flex flex-col md:flex-row justify-between items-center px-6 md:px-10 py-6 border-b border-[#cfd8c3]">
-        <h1 className="text-2xl tracking-wide">Opal HomeStaging</h1>
+        <Link to="/" aria-label="Opal HomeStaging home" className="block w-[220px] md:w-[280px]">
+          <OpalLogo className="w-full h-auto" />
+        </Link>
         <nav className="space-x-6 text-sm mt-4 md:mt-0">
           <Link to="/" className="hover:text-[#6b8f71]">
             Home
