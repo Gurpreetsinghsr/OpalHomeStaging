@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { OpalLogo3D } from "../components/branding/OpalLogo3D.tsx";
 
 export function Home() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export function Home() {
     <section className="px-6 md:px-10 py-16 space-y-16">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div>
+          <OpalLogo3D className="w-full max-w-[420px] mb-6" />
           <h2 className="text-4xl mb-6 leading-tight">
             Helping Sydney & Newcastle properties achieve faster sales and
             stronger prices
