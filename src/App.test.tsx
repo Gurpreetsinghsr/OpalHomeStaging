@@ -3,6 +3,6 @@ import App from "./App";
 
 test("renders brand name", () => {
   render(<App />);
-  const brand = screen.getByText(/Opal HomeStaging/i);
+  const brand = screen.getAllByText(/Opal HomeStaging/i)[0];
   expect(brand).toBeInTheDocument();
 });
