@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const CONTACT_API_ENDPOINT =
-  "http://localhost:4000";
+  "https://formsubmit.co/ajax/Opal.homestyling@gmail.com";
 
 /** ---------- Types ---------- */
 type FormValues = {
@@ -33,9 +33,7 @@ const validate = (values: FormValues): FormErrors => {
 
   if (!values.email.trim()) {
     errors.email = "Email is required.";
-  } else if (
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())
-  ) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
     errors.email = "Please enter a valid email address.";
   }
 
@@ -43,7 +41,7 @@ const validate = (values: FormValues): FormErrors => {
     errors.phone = "Please enter a valid phone number.";
   }
 
-  if (!values.message.trim()) {
+  if (!values.message.trim() || values.message.trim().length < 10) {
     errors.message = "Message must be at least 10 characters.";
   }
 
@@ -67,7 +65,6 @@ export function Connect() {
       [name]: value,
     }));
 
-    // Clear field-level error on change
     if (errors[name as keyof FormValues]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -87,22 +84,30 @@ export function Connect() {
     setSubmitting(true);
 
     try {
+      const payload = {
+        ...values,
+        _subject: `New enquiry from ${values.name}`,
+        _template: "table",
+        _captcha: "false",
+        _replyto: values.email,
+      };
+
       const res = await fetch(CONTACT_API_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json().catch(() => null);
 
-      if (!res.ok || data?.ok === false) {
-        throw new Error(data?.error || "Failed to send your enquiry.");
+      if (!res.ok || (data && data.success === false)) {
+        throw new Error(data?.message || "Failed to send your enquiry.");
       }
 
-      setStatus(
-        data?.message ||
-          "Thanks for your enquiry. We’ll get back to you shortly."
-      );
+      setStatus("Thanks for your enquiry. We’ll get back to you shortly.");
       setValues(initialValues);
       setErrors({});
     } catch (err: any) {
@@ -116,7 +121,6 @@ export function Connect() {
     }
   };
 
-  /** ---------- UI ---------- */
   return (
     <section className="px-6 md:px-10 py-16 max-w-2xl mx-auto">
       <h2 className="text-3xl mb-6 text-center">Contact Us</h2>
@@ -132,7 +136,6 @@ export function Connect() {
       </p>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        {/* Name */}
         <Input
           name="name"
           placeholder="Name"
@@ -141,7 +144,6 @@ export function Connect() {
           onChange={handleChange}
         />
 
-        {/* Email */}
         <Input
           name="email"
           placeholder="Email"
@@ -150,7 +152,6 @@ export function Connect() {
           onChange={handleChange}
         />
 
-        {/* Phone */}
         <Input
           name="phone"
           placeholder="Phone (optional)"
@@ -159,7 +160,6 @@ export function Connect() {
           onChange={handleChange}
         />
 
-        {/* Address */}
         <Input
           name="address"
           placeholder="Address (optional)"
@@ -167,7 +167,6 @@ export function Connect() {
           onChange={handleChange}
         />
 
-        {/* Message */}
         <Textarea
           name="message"
           placeholder="Message"
@@ -193,8 +192,6 @@ export function Connect() {
     </section>
   );
 }
-
-/** ---------- Reusable Inputs (Scalable) ---------- */
 
 function Input({
   name,

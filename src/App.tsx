@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout.tsx";
+import { Seo } from "./components/Seo.tsx";
 import { Connect } from "./pages/Connect.tsx";
 import { FAQ } from "./pages/FAQ.tsx";
 import { Gallery } from "./pages/Gallery.tsx";
@@ -11,6 +12,7 @@ import { Services } from "./pages/Services.tsx";
 export default function App() {
   return (
     <Router>
+      <Seo />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
