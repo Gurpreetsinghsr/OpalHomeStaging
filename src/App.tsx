@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { Layout } from "./components/Layout.tsx";
 import { Connect } from "./pages/Connect.tsx";
 import { FAQ } from "./pages/FAQ.tsx";
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/connect" element={<Connect />} />
         </Routes>
       </Layout>
+      <Analytics />
     </Router>
   );
 }
