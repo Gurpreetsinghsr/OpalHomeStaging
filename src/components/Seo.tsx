@@ -4,12 +4,14 @@ import { useLocation } from "react-router-dom";
 type SeoMeta = {
   title: string;
   description: string;
+  image?: string;
 };
 
 const defaultMeta: SeoMeta = {
   title: "Opal HomeStaging | Home Staging in Sydney & Newcastle",
   description:
     "Professional home staging in Sydney and Newcastle to help properties sell faster and at stronger prices.",
+  image: "https://opalhomestaging.com/logo512.png",
 };
 
 const routeMeta: Record<string, SeoMeta> = {
@@ -51,6 +53,51 @@ export function Seo() {
     const descriptionEl = document.querySelector('meta[name="description"]');
     if (descriptionEl) {
       descriptionEl.setAttribute("content", meta.description);
+    }
+
+    const ogTitleEl = document.querySelector('meta[property="og:title"]');
+    if (ogTitleEl) {
+      ogTitleEl.setAttribute("content", meta.title);
+    }
+
+    const ogDescriptionEl = document.querySelector(
+      'meta[property="og:description"]'
+    );
+    if (ogDescriptionEl) {
+      ogDescriptionEl.setAttribute("content", meta.description);
+    }
+
+    const ogUrlEl = document.querySelector('meta[property="og:url"]');
+    if (ogUrlEl) {
+      ogUrlEl.setAttribute(
+        "content",
+        `https://opalhomestaging.com${location.pathname}`
+      );
+    }
+
+    const ogImageEl = document.querySelector('meta[property="og:image"]');
+    if (ogImageEl) {
+      ogImageEl.setAttribute("content", meta.image || defaultMeta.image || "");
+    }
+
+    const twitterTitleEl = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitleEl) {
+      twitterTitleEl.setAttribute("content", meta.title);
+    }
+
+    const twitterDescriptionEl = document.querySelector(
+      'meta[name="twitter:description"]'
+    );
+    if (twitterDescriptionEl) {
+      twitterDescriptionEl.setAttribute("content", meta.description);
+    }
+
+    const twitterImageEl = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImageEl) {
+      twitterImageEl.setAttribute(
+        "content",
+        meta.image || defaultMeta.image || ""
+      );
     }
 
     const canonicalEl = document.querySelector('link[rel="canonical"]');

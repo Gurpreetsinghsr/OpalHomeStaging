@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+Host: opalhomestaging.com
+
 Sitemap: https://opalhomestaging.com/sitemap.xml
+
+# AI-readable business context
+# https://opalhomestaging.com/llms.txt
